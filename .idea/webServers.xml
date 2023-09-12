@@ -9,6 +9,13 @@
           </advancedOptions>
         </fileTransfer>
       </webServer>
+      <webServer id="fa6aadd8-ead5-46ff-b35e-9abbb0768ef9" name="Web4 N320 Mac" url="http://in-info-web4.informatics.iupui.edu/~jayannad/">
+        <fileTransfer rootFolder="/home/students/jayannad/public_html/" accessType="SFTP" host="in-info-web4.informatics.iupui.edu" port="22" sshConfigId="4bfe2da3-5c3e-4f38-9c7f-534e26ec2d3a" sshConfig="jayannad@in-info-web4.informatics.iupui.edu:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>
