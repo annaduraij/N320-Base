@@ -384,6 +384,37 @@ export class UtilHTML{
         return color;
 
     }// End of parseColor function
+
+    //Static Randomization Method
+    //function 'random' Chooses a Random Value Between Two Integers
+    //Inclusive of Both Values
+    static random(minimum, maximum) {
+        //Set Minimum Value and Round It Up to the Next Value
+        minimum = Math.ceil(minimum);
+        //Set Maximum Value and Round It Down to the next Value
+        maximum = Math.floor(maximum);
+        //Generates Random Value
+        let baseRandom = Math.random()
+
+        //Normalized Random (Linear Adjustment), remember final function is wrapped in Math.floor, so it's rounded down and to counteract that, must raise by 1
+        //Math.round() * Math.Random isn't used here because Math.round under-represents the endpoints
+        //Consider 0: to get 0, 0.00 - 0.49 is an accepted value | Consider 1: to get 1, 0.50 - 1.49 is an accepted value
+        //Note, if for whatever reason, Math.ceiling is using in the final adjustment, you'd subtract by 1 here to counteract the round up
+        let scaleRandom = maximum - minimum + 1
+
+        //Adjust the Value to the Minimum
+        let interceptRandom = minimum;
+
+        //Final Random
+        //let random = Math.floor(baseRandom * scaleRandom + interceptRandom);
+
+        //Return Random Integer
+        //return random;
+
+        //Inline Return
+        return Math.floor(baseRandom * scaleRandom + interceptRandom);
+
+    }//End of Random Function
 }
 
 //Class to Create HTML Console Outputs
