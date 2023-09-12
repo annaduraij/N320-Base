@@ -3,17 +3,8 @@
  * Date: 11 Sep 2023
  * File: app.js
  * Project: N320-Base
- * Description:
+ * Description: Callback Function Example
  */
-
-/*
-Create a folder called homework-two.
-You can either create an html/javascript file pair or write the javascript directly in the html file.
-Your html portion of this homework will include the following:
-Largest heading with text: Callback Functions
-Second-largest heading with the current date.
-Second-largest heading with your name.
-*/
 
 //Import Classes to Build HTML via JS
 
@@ -28,51 +19,14 @@ HJShortcuts.injectCSS(pathToRoot);
 
 //Build a Wrapper onto the Page
 let wrapperHTML = HJShortcuts.buildWrapper();
-//
-// //Build the Title onto the Page
-// //Instantiate HTMLasJS Object
-// let titleHTML = new HTMLasJS(
-//     'h1',
-//     {
-//         id: "Title"
-//     },
-//     {color: 'white'},
-//     "Callback Functions"
-// )
-// //Build HTMLasJS Object onto the Page
-// wrapperHTML.get().appendChild(titleHTML.build())
-//
-// //Build the Date onto the Page
-// //Get the Date
-// let date = new Date(1694479600134).toLocaleDateString();
-// //Instantiate HTMLasJS Object
-// let dateHTML = new HTMLasJS(
-//     'h2',
-//     {
-//         id: "Date"
-//     },
-//     {},
-//     date
-// )
-// //Build HTMLasJS Object onto the Page
-// wrapperHTML.get().appendChild(dateHTML.build())
-
-// //Build the Author Name onto the Page
-// //Instantiate HTMLasJS Object
-// let authorHTML = new HTMLasJS(
-//     'h2',
-//     {
-//         id: "Author"
-//     },
-//     {},
-//     "Jay Annadurai"
-// )
-// //Build HTMLasJS Object onto the Page
-// wrapperHTML.get().appendChild(authorHTML.build())
-
-
 
 /*
+Create a folder called homework-two.
+You can either create an html/javascript file pair or write the javascript directly in the html file.
+Your html portion of this homework will include the following:
+Largest heading with text: Callback Functions
+Second-largest heading with the current date.
+Second-largest heading with your name.
 1st paragraph will include the two numbers. (read below)
 2nd paragraph will include the total value. (read below)
 3rd paragraph will include the average. (read below)
@@ -113,8 +67,6 @@ const arithmeticCompute = (secondaryCompute,...numbers) => {
     //Iterate through the Numbers
     numbers.forEach((num,i,numbers) => {
 
-
-
         //The Original Values Must be Modified
         if(i === 0) {
             for (let operation in data.results) {
@@ -130,7 +82,6 @@ const arithmeticCompute = (secondaryCompute,...numbers) => {
         }
 
     });
-
 
     //Process the Results via the Secondary Compute and Return It
     // console.log("Outgoing Numbers")
@@ -159,7 +110,6 @@ const averageNumbers = (...numbers) => {
 
         //Increment the Sum
         sum += parseFloat(num);
-        console.log(sum);
     }
 
     //Compute the Average
@@ -167,19 +117,20 @@ const averageNumbers = (...numbers) => {
 }
 
 //Predefined List of Numbers
-const numbers = [2,4,8,16];
+const numbers = [1,1,1,1];
 
 //Run the computation function and bind the results
 const data = (arithmeticCompute(averageNumbers,...numbers));
+console.log(data);
 
-//Assignment Requirements
+//Assignment Display Requirements
 const requirements = [
-    {tag: 'h1', id: 'title', value: "Callback Functions"},
-    {tag: 'h2', id: 'date', value: new Date(1694479600134).toLocaleDateString()},
-    {tag: 'h2', id: 'author', value: "Jay Annadurai"},
-    {tag: 'p', id: 'numList', value: `Numbers: ${numbers.toString()}`},
-    {tag: 'p', id: 'numTotal', value: `Total: ${data.secondary.sum}`},
-    {tag: 'p', id: 'numTotal', value: `Average: ${data.secondary.average}`}
+    {tag: 'h1', id: 'title', content: "Callback Functions"},
+    {tag: 'h2', id: 'date', content: new Date(1694479600134).toLocaleDateString()},
+    {tag: 'h2', id: 'author', content: "Jay Annadurai"},
+    {tag: 'p', id: 'numList', content: `Numbers: ${numbers.toString()}`},
+    {tag: 'p', id: 'numTotal', content: `Total: ${data.secondary.sum}`},
+    {tag: 'p', id: 'numTotal', content: `Average: ${data.secondary.average}`}
 ]
 
 //Build the Required HTML Elements onto the Page
@@ -192,7 +143,7 @@ for (let element of requirements) {
             id: element.id
         },
         {},
-        element.value
+        element.content
     )
 
     //Build HTML Object onto the Page
