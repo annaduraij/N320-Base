@@ -117,7 +117,7 @@ const averageNumbers = (...numbers) => {
 }
 
 //Predefined List of Numbers
-const numbers = [1,1,1,1];
+const numbers = [2,4,8,16];
 
 //Run the computation function and bind the results
 const data = (arithmeticCompute(averageNumbers,...numbers));
