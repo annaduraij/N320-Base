@@ -1,0 +1,35 @@
+/* -----------------------------------------
+                  CSS Import
+   ----------------------------------------- */
+
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@200;300;400;500;600;700&family=Cairo+Play&family=Odibee+Sans&display=swap');
+
+
+/* -----------------------------------------
+                CSS Variables
+   ----------------------------------------- */
+
+:root {
+    /* Colors */
+    --c--primary: rgb(0, 0, 0);
+    --c--primary--background-blur: rgba(20, 20, 20, 0.8);
+    --c--primary--translucent: rgba(20, 20, 20, 0.9);
+    --c--secondary: rgb(20,20,20);
+    --c--tertiary: rgb(80,20,20);
+    --c--accent: rgb(255, 63, 63);
+    --c--text: rgba(255,255,255,0.8);
+    --c--emphasis: rgb(255,255,255);
+    --c--subtle: rgba(255,255,255,0.3);
+
+    /* Resolution & Aspect Ratios */
+    --r-aspect-width: 16px;
+    --r-aspect-height: 9px;
+
+    /* Individual Scalars */
+    --r-scalar-graph: 80;
+
+    /* Set Div Border Shadow Width */
+    /* Now in Outlines: --shadow-width: 0px; */
+
+}

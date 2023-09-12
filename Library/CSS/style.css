@@ -1,0 +1,665 @@
+/* Variable to Set Div Border Shadow Width */
+:root {
+    /*Grid Spacing */
+    --grid-space: 0.1em;
+
+    /* Page Font */
+    --body-font-family: Montserrat, sans-serif;
+    --body-font-size: 1em;
+}
+
+/* ---General-Classes--- */
+.button {
+    cursor: pointer;
+    width: fit-content;
+    /* Animation */
+    transition-property: transform, color;
+    transition-duration: 200ms;
+    /* Stops Selecting/Highlighting Text when Double-Clicking a Button */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+.button:hover {
+    color: var(--c--emphasis) !important;
+    transform: scale(1.03);
+}
+.button:active{
+    /* color: var(--c--emphasis); */
+    transform: scale(0.97);
+}
+.spacer {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    font-size: 1.1em;
+    color: var(--c--subtle) !important;
+}
+
+/* ---General-Grid--- */
+.grid-container {
+    display: grid;
+    gap: var(--grid-space);
+    padding: var(--grid-space);
+}
+
+/* ---General-Flex--- */
+.flex {
+    display: flex;
+}
+.flex.row {
+    flex-flow: row wrap;
+}
+.flex.col {
+    flex-flow: column nowrap;
+}
+.flex.center {
+    justify-content: center;
+    align-items: center;
+}
+
+/* ---General--Page-Body-- */
+body {
+
+    /*background-image: url("../css/resources/bg_books_gs.png");*/
+    background-color: var(--c--primary--background-blur);
+    background-size: 50%;
+    background-repeat: repeat;
+    background-blend-mode: multiply;
+}
+#wrapper, body {
+    width: 100%;
+    height: 100%;
+
+    font-family: var(--body-font-family);
+    font-size: var(--body-font-size);
+}
+body * {
+    color: var(--c--text);
+}
+
+
+/* ---Header--- */
+#header {
+    padding: 0;
+    background-color: var(--c--secondary);
+}
+#header div{
+    color: var(--c--text)
+}
+#header > div{
+    color: var(--c--text);
+    padding: 3px 2vw;
+}
+
+
+/* ---Header---Primary---Nav-Bar--- */
+#header--primary {
+    grid-template-columns: 45% 10% 45%;
+    background-color: var(--c--secondary);
+}
+
+#header--primary #site-title {
+    padding-left: calc(0.5em + 0.5vh);
+    justify-content: flex-start;
+}
+
+#header--primary #nav-bar {
+    /* Adjust the Navbar to be Consistent with the Button */
+    padding-right: calc(0.5em + 0.5vh);
+    justify-content: flex-end;
+}
+
+#logo-container {
+    width: 100%;
+}
+#logo-container:hover  {
+    transform: scale(1.2);
+}
+
+#logo-container > img {
+    display: block;
+    height: 1.7em;
+}
+
+#site-title {
+    text-align: center;
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+    padding: 0.8vh 0;
+}
+#nav-bar {
+    flex-wrap: wrap;
+
+    align-items: center;
+
+}
+
+
+/* ---Header---Secondary---Selection-Bar--- */
+#header--secondary {
+    background-color: var(--c--tertiary);
+}
+#selection-bar  {
+    grid-template-columns: min-content auto max-content min-content;
+    gap: 0.5em;
+    text-align: center;
+}
+#selection-bar div.button {
+    /* padding: 0 1vw; */
+    margin: 0.5vh /*.2vw*/;
+}
+#selection-bar div.button,
+#selection-bar input,
+#selection-bar select  {
+    color: var(--c--text);
+    background-color: var(--c--secondary);
+    text-align: center;
+
+    border: 0 ;
+    border-radius: 0.5em;
+
+    padding: 0.25em 0.5em;
+}
+#selection-bar #semester-dropdown,
+#selection-bar #upload-file,
+#selection-bar #file-search {
+    font-weight: 500;
+}
+
+/* source for rounded out button design https://css-tricks.com/tabs-with-round-out-borders/ */
+
+/* ---Body--- */
+#page-body {
+    color: var(--c--text)
+}
+#page-body .button--container {
+    padding: 10px;
+    justify-content: center;
+}
+
+#page-body .button {
+    padding: 0.6em;
+    text-align: center;
+    font-size: 1.2em;
+    border: none;
+
+    background-color: var(--c--tertiary);
+    border-radius: 1em;
+}
+
+/* ---Footer--- */
+#footer {
+    grid-template-columns: auto auto auto;
+
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 3;
+
+    padding: 0;
+
+    background-color: var(--c--secondary);
+    /*gap: 5vw;*/
+    /*padding: 10vw;*/
+}
+#footer div {
+    padding: 0.15em 0;
+}
+#footer a {
+    color: var(--c--text);
+    text-decoration: none;
+    text-align: center;
+
+}
+#footer .button:hover {
+    transform: scale(1);
+}
+#footer .button:active{
+    transform: scale(0.97);
+}
+#footer .flex.row {
+    justify-content: center;
+}
+/*------------------------------------------------------------------------*/
+/*                               Page-Views                               */
+/*------------------------------------------------------------------------*/
+
+/*-------------------------------------------*/
+/*                 Home View                 */
+/*-------------------------------------------*/
+
+#page-body--home {
+    background-color: var(--c--primary--translucent);
+    margin: 8vw;
+    border-radius: 1em;
+
+    grid-template-columns: auto auto auto auto;
+    gap: 5vw;
+}
+#page-body--home div {
+    padding: 10px;
+}
+
+#page-body--home #greeting--message {
+    line-height: 1.5em !important;
+}
+
+#page-body--home .button,
+#page-body--home #home--semester-dropdown{
+    padding: 0.6em;
+    text-align: center;
+    font-size: 1.2em;
+    border: none;
+
+    background-color: var(--c--tertiary);
+    border-radius: 1em;
+}
+
+#page-body--home #home--semester-dropdown option {
+    letter-spacing: 2em;
+}
+
+/*-------------------------------------------*/
+/*                Error View                 */
+/*-------------------------------------------*/
+
+#page-body--error {
+    background-color: var(--c--primary--translucent);
+    margin: 6vw auto;
+    border-radius: 1em;
+
+    gap: 1vh;
+
+    max-width: 60%;
+}
+
+#page-body--error > div > div {
+    padding-top: 3vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    /*margin: 1.5vh 1vw; */
+}
+#page-body--error #error--container > div {
+    font-size: 1.3em !important;
+    line-height: 1.4em;
+}
+
+#page-body--error #error--message {
+    font-style: italic;
+}
+
+#page-body--error .button {
+    padding: 0.6em;
+    margin: 1em;
+    font-size: 1.5em !important;
+    border: none;
+
+    background-color: var(--c--tertiary);
+    border-radius: 1em;
+}
+
+#page-body--error .button#error--contact-admin {
+    background-color: var(--c--tertiary);
+}
+
+#page-body--error #actions-container{
+    justify-content: space-evenly;
+}
+
+#page-body--error #home--semester-dropdown option {
+    letter-spacing: 2em;
+}
+
+
+/*-------------------------------------------*/
+/*             Registration View             */
+/*-------------------------------------------*/
+
+#page-body--registration {
+    background-color: var(--c--primary--translucent);
+    margin: 6vw auto;
+    padding: 2vh 3vw;
+    border-radius: 3em;
+
+    width: fit-content;
+    max-width: 60%;
+}
+#page-body--registration.grid-container{
+    gap: 1vh;
+}
+
+#page-body--registration #form--title {
+    padding-top: 2vh;
+    padding-bottom: 5vh;
+}
+
+#form--body > form div.form-input {
+    /* padding: 1vh; */
+    justify-self: end;
+}
+
+#page-body--registration > div > div {
+
+}
+#page-body--registration #registration--container > div {
+    font-size: 1.1em !important;
+}
+
+#page-body--registration #registration--message {
+    font-style: italic;
+}
+
+#page-body--registration .button {
+    padding: 0.5vh;
+    margin-bottom: 4vh;
+    font-size: 1.2em !important;
+    border: none;
+
+    background-color: var(--c--text);
+    color: var(--c--primary) !important;
+    border-radius: 0.75em;
+}
+
+#page-body--registration .button:hover,
+#page-body--registration .button:active{
+    color:var(--c--accent) !important;
+}
+
+#page-body--registration #register.button {
+    padding: 1.5vh;
+    margin: 2vh;
+    font-size: 1.3em !important;
+
+    background-color: var(--c--tertiary);
+    color: var(--c--text) !important;
+
+}
+#page-body--registration #register.button:hover,
+#page-body--registration #register.button:active {
+    color:var(--c--emphasis) !important;
+}
+
+#page-body--registration .button#registration--contact-admin {
+    background-color: var(--c--tertiary) ;
+}
+
+#page-body--registration #actions-container{
+    justify-content: space-evenly;
+}
+
+#page-body--registration #home--semester-dropdown option {
+    letter-spacing: 2em;
+}
+
+
+/*-------------------------------------------*/
+/*                Login View                 */
+/*-------------------------------------------*/
+
+#page-body--login {
+    background-color: var(--c--primary--translucent);
+    margin: 6vw auto;
+    padding: 2vh 3vw;
+    border-radius: 3em;
+
+    width: fit-content;
+    max-width: 60%;
+}
+#page-body--login.grid-container{
+    gap: 1vh;
+}
+
+#page-body--login #form--title {
+    padding-top: 2vh;
+    padding-bottom: 5vh;
+}
+
+#form--body > form div.form-input {
+    /* padding: 1vh; */
+    justify-self: end;
+}
+
+#page-body--login > div > div {
+
+}
+#page-body--login #login--container > div {
+    font-size: 1.1em !important;
+}
+
+#page-body--login #login--message {
+    font-style: italic;
+}
+
+#page-body--login .button {
+    padding: 0.5vh;
+    margin-bottom: 4vh;
+    font-size: 1.2em !important;
+    border: none;
+
+    background-color: var(--c--text);
+    color: var(--c--primary) !important;
+    border-radius: 0.75em;
+}
+
+#page-body--login .button:hover,
+#page-body--login .button:active{
+    color:var(--c--accent) !important;
+}
+
+#page-body--login #login.button {
+    padding: 1.5vh;
+    margin: 2vh;
+    font-size: 1.3em !important;
+
+    background-color: var(--c--tertiary);
+    color: var(--c--text) !important;
+
+}
+#page-body--login #login.button:hover,
+#page-body--login #login.button:active {
+    color:var(--c--emphasis) !important;
+}
+
+#page-body--login.button#login--contact-admin {
+    background-color: var(--c--tertiary) ;
+}
+
+#page-body--login #actions-container{
+    justify-content: space-evenly;
+}
+
+#page-body--login #home--semester-dropdown option {
+    letter-spacing: 2em;
+}
+
+
+/*-------------------------------------------*/
+/*              Upload Form View             */
+/*-------------------------------------------*/
+
+#page-body--login {
+    background-color: var(--c--primary--translucent);
+    margin: 6vw auto;
+    padding: 2vh 3vw;
+    border-radius: 3em;
+
+    width: fit-content;
+    max-width: 60%;
+}
+#page-body--upload.grid-container{
+    gap: 1vh;
+}
+
+#page-body--upload #form--title {
+    padding-top: 2vh;
+    padding-bottom: 5vh;
+}
+
+#form--body > form div.form-input {
+    /* padding: 1vh; */
+    justify-self: end;
+}
+
+#page-body--upload > div > div {
+
+}
+#page-body--upload #upload--container > div {
+    font-size: 1.1em !important;
+}
+
+#page-body--upload #upload--message {
+    font-style: italic;
+}
+
+#page-body--upload .button {
+    padding: 0.5vh;
+    margin-bottom: 4vh;
+    font-size: 1.2em !important;
+    border: none;
+
+    background-color: var(--c--text);
+    color: var(--c--primary) !important;
+    border-radius: 0.75em;
+}
+
+#page-body--upload .button:hover,
+#page-body--upload .button:active{
+    color:var(--c--accent) !important;
+}
+
+#page-body--upload #upload.button {
+    padding: 1.5vh;
+    margin: 2vh;
+    font-size: 1.3em !important;
+
+    background-color: var(--c--tertiary);
+    color: var(--c--text) !important;
+
+}
+#page-body--upload #upload.button:hover,
+#page-body--upload #upload.button:active {
+    color:var(--c--emphasis) !important;
+}
+
+#page-body--upload.button#upload--contact-admin {
+    background-color: var(--c--tertiary) ;
+}
+
+#page-body--upload #actions-container{
+    justify-content: space-evenly;
+}
+
+#page-body--upload #home--semester-dropdown option {
+    letter-spacing: 2em;
+}
+
+/*-------------------------------------------*/
+/*            Admin Settings View            */
+/*-------------------------------------------*/
+
+#page-body--admin-settings {
+    background-color: var(--c--primary--translucent);
+    margin: 6vw auto;
+    padding: 2vh 3vw;
+    border-radius: 3em;
+
+    width: 60%;
+}
+
+#admin-title {
+    padding-top: 2vh;
+    padding-bottom: 5vh;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    margin: 0% 5%;
+    /* border: solid 1px black; */
+
+}
+.list div {
+    /*  */
+    text-align: center;
+
+}
+
+.list span{
+    padding: 3px 5px;
+}
+
+
+
+.list .row {
+    display: flex;
+
+    /* border: solid 1px rgba(40, 40, 40, 0.5); */
+}
+
+.list .row:nth-child(even) {
+    /*background-color: rgba(6, 105, 67, 10%); */
+}
+
+
+.list .header {
+    /* background-color: #066943; */
+    /* color: white; */
+    color: var(--c--accent) !important;
+    border-top: 0px solid black;
+    border-bottom: 0px solid black;
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+}
+
+.list .header > .col {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    color: var(--c--accent) ;
+}
+
+.list [class^="col"] {
+    padding: 5px;
+    width: 20%;
+    border: solid 0px rgba(40, 40, 40, 0.5);
+}
+
+.list hr {
+    width: 100%;
+    border: 1px solid var(--c--tertiary);
+}
+
+/*-------------------------------------------*/
+/*           Archive Detail View             */
+/*-------------------------------------------*/
+
+/* ---Detail Page--- */
+#detailed-page-body--container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 200px;
+}
+#detailed-page-body--container iframe {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 6;
+}
+#detailed-page-body--container a {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+#detailed-page-body--container a {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+
+
