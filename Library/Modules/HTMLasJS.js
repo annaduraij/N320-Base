@@ -601,7 +601,7 @@ export class HJShortcuts {
             flexFlow: 'column nowrap',
             justifyContent: 'center',
             alignItems: 'center',
-            margin: '2vh'
+            margin: '',
         }
         ) {
         //Wrapper should flex the Containers into Divs
@@ -616,7 +616,7 @@ export class HJShortcuts {
                 flexFlow: 'column nowrap',
                 justifyContent: 'center',
                 alignItems: 'center',
-                margin: '2vh'
+                margin: ''
             },
         );
 
