@@ -3,8 +3,16 @@
  * Date: 11 Sep 2023
  * File: app.js
  * Project: N320-Base
- * Description: Promises
+ * Description: HW3a - Utilize Promises to Retrieve
  */
+
+//Questions
+//Was this completed as expected in terms of using an async function correctly to grab the data
+
+
+//-----------------------------------
+//              Config
+//-----------------------------------
 
 //Import Classes to Build HTML via JS
 
@@ -20,156 +28,223 @@ HJShortcuts.injectCSS(pathToRoot);
 //Build a Wrapper onto the Page
 let wrapperHTML = HJShortcuts.buildWrapper();
 
-//
-// // Promises
-// // 3 States: Pending | Fulfilled | Rejected
-// // Must account for Pending and either Fulfilled or Rejected
-// // Normally accepts Data from an API
-//
-// //Callback Functions are argued into the promise
-// //Constants are typically used to hold Promises
-// const basicPromise = new Promise((resolveFunction,rejectFunction) => {
-//     let x = 10;
-//
-//     if (x===10) {
-//         resolveFunction();
-//     }
-//
-//     else {
-//         rejectFunction();
-//     }
-//
-// });
-//
-// //'Then' only runs if the promise is fulfilled
-// basicPromise.then(
-//     //Will Run on Resolved
-//     function () {
-//         wrapperHTML.get().innerHTML += "Basic Promise Resolved";
-//     },
-//     //Will Run on Rejected
-//     function() {
-//         wrapperHTML.get().innerHTML += "Basic Promise Rejected";
-//     }
-// );
-//
-//
-// //Another basic function using catch
-// const catchPromise = new Promise((resolveFunction, rejectFunction) => {
-//     //Generates value from 0 to 0.9999
-//     let randNum = Math.random();
-//
-//     if(randNum < 0.5) {
-//         resolveFunction(randNum);
-//     }
-//
-//     else {
-//         rejectFunction(randNum);
-//     }
-//
-// }); //End of Catch Promise
-//
-// //Notice how the function following the 'then' is the resolution function, and the function following the 'catch' is the rejection function
-// //You technically can do the promise as above where the rejection function is simply passed as a second argument to the 'then' function
-// catchPromise.then (
-//     //Resolve Function
-//     (num) => {
-//         console.log(`Catch Promise Resolved: ${num}`)
-//     }
-// //Then and uses Catch
-// ).catch(
-//     //Rejection Function
-//     (num) => {
-//         console.log(`Catch Promise Rejected: ${num}`)
-//     },
-// );
-//
-// //Promise with a setTimeout
-// //Notice there is no explicit conditional logic to guide whether it is resolved or rejected | it will always resolve
-// const timeoutPromise = new Promise( (resolveFunction,rejectFunction) => {
-//     console.log(`setTimeout Promise Initiated`);
-//     setTimeout( () => { resolveFunction(UtilHTML.random(0,10))}, 2000);
-// });
-//
-// //Resolution Function
-// timeoutPromise.then((data) => {
-//     console.log(`setTimeout Promise Resolved: ${data}`);
-// })
-//
-// //Note to the User that the Timeout Function has begun;
-//
-//
-// //Promise Chaining
-// const chainPromise = new Promise( (resolveFunction, rejectFunction) => {
-//     resolveFunction(UtilHTML.random(0,10));
-// });
-//
-// //Actual Promise Chain
-// chainPromise.then((data) => {
-//     console.log(`Promise Chain 1: ${data}`);
-//     return data*2;
-// }).then((data) => {
-//     console.log(`Promise Chain 2 (x2): ${data}`);
-//     return data+10;
-// }).then((data) => {
-//     console.log(`Promise Chain 3(+10): ${data}`);
-// });
-//
-//
-// //Fetching Data from an External Source
-// //Note, ideally a fetch will take as long as necessary to resolve, so it's good practice to add a timeout
-//
-// //This JSON just has some product information
-// const fetchPromise = fetch("https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json")
-//
-// //Check the state of the incoming external data
-// console.log("Fetched Promise: ",fetchPromise);
-//
-// //When it successfully resolves and responds
-// fetchPromise.then( (resolveResults) => {
-//     //Bind the Data and encode it into JSON into a Promise
-//     //Note, when getting json data from an API, it is inherently treated as a promise
-//     const jsonPromise = resolveResults.json();
-//
-//     //Indirect Promise Chaining
-//     jsonPromise.then ((jsonData) => {
-//         console.log("Fetch Response Data", jsonData);
-//     });
-// });
+//Build Title
+let pageTitle = new HTMLasJS(
+    "div",
+    {
+        id: "pageTitle"
+    },
+    {
+        margin: "0 auto",
+        fontSize: "3em",
+        fontFamily: "Brush Script MT, cursive"
+    },
+    'Quotes from Quotable API'
+);
+wrapperHTML.get().appendChild(pageTitle.build());
+
+//-------------------------------------
+//              Execution
+//-------------------------------------
+
+//Run the Fetch Function
+fetchQuotes(
+    true,
+    48,
+    "https://api.quotable.io/quotes",
+    wrapperHTML, //Container to Build Elements On
+    quoteBuilder, //Callback Function to Display Page Elements
+    displayError //Callback Function to Display Errors
+);
 
 
+//-------------------------------------
+//              Functions
+//-------------------------------------
 
-async function goChuck() {
-    //API Call - Note remember that Fetch is a Promise
-    const response = await fetch("https://api.chucknorris.io/jokes/random");
+//Fetching Data from an External Source
+//Note, ideally a fetch will take as long as necessary to resolve, so it's good practice to add a timeout
+async function fetchQuotes(random = true, quantity = 48, api = "https://api.quotable.io/quotes", container = wrapperHTML, viewFunction = quoteBuilder, errorFunction = displayError)
+{
+    //Bind the API URL
+    let quotes = { api: api }
 
-    //Bind the Results as a JSON once the response from the API is acquired
-    const results = await response.json()
+    //Concatenate the Random Flag if Enabled
+    if(random === true) {
+        quotes.api += "/random"
+    }
 
-    //Check the Results
-    console.log(results);
+    //Concatenate the Quote Quantity
+    quotes.api += "?limit=" + quantity;
 
-    //Return the Results
-    return results;
+    //This Fetch Retrieves Quotes from an API
+    quotes.fetch = fetch(quotes.api);
+
+    //Check the state of the incoming external data
+    console.log("Raw Fetch Data",quotes.fetch);
+
+    //When the fetch call successfully resolves and responds
+    quotes.fetch
+        //On Successful Resolve:
+        .then( (resolvedResponse) => {
+            //Utilize the .json Method of the built-in Response class
+            //Returns a promise in and of itself that will then read JSON data
+            quotes.data = resolvedResponse.json();
+
+            //Indirect Promise Chaining
+            quotes.data
+                //On Correct Resolution
+                .then ((data) => {
+                    //Log the JSON Data from the Promise
+                    console.log("Parsed Fetch Data", data);
+
+                    //Rebind the Data | Note, the Data is captured in the Results field
+                    quotes.data = data;
+
+                    //Build the Quotes onto the Page with the Function
+                    viewFunction(quotes.data,container);
+                })
+                //Catch Errors
+                .catch( (error) => {
+                    displayError(error,container,"Data Parse Failed- ")
+                });
+
+            //Log the Entire Quotes Objects
+            setTimeout(() => { console.log("Quotes Object", quotes); },400);
+
+        })//End of Fetch Resolve
+
+        //On Erroneous Resolve:
+        .catch((error) => {
+            displayError(error,container,"API Fetch Failed- ")
+        });
+
+}//End of Asynchronous Function to Fetch Quotes
+
+
+/**
+ * Builds Quotes onto the Page
+ * @param quotes - Array of Quote Objects with the properties of '_id', 'author', and 'content'
+ * @param container - HTMLasJS Object to Build Objects Into
+ */
+async function quoteBuilder (quotes,container) {
+
+    //Build Grid Container
+    let gridContainer = new HTMLasJS(
+        "div",
+        {
+            id: "gridContainer"
+        },
+        {
+            display: "grid",
+            gridTemplateColumns: "33% 33% 33%",
+            margin: "1em"
+        },
+        ''
+    );
+    container.get().appendChild(gridContainer.build());
+
+    //Sort the Quotes by Length so formatting between left and right containers can be symmetrical
+    quotes.sort((quoteA,quoteB) => {return quoteA.length - quoteB.length})
+
+    //Iterate Through the Quotes
+    for(let quote of quotes) {
+
+        //Define the ID of the Quote
+        let divID = `Q-${quote['_id']}`
+        let contentID = `QC-${quote['_id']}`
+        let authorID = `QA-${quote['_id']}`
+
+        //Build Quote Container that houses the Text and Author
+        let quoteContainer = new HTMLasJS(
+            "div",
+            {
+                id: divID
+            },
+            {
+                display: "flex",
+                flexFlow: "column wrap",
+                flexGrow: 1,
+                justifyContent: "space-between",
+
+                backgroundColor: 'white',
+                color: 'black',
+
+                border: '1px solid black',
+                borderRadius: '0.5em',
+
+                //width: "60vw",
+                padding: '0.5em',
+                margin: '0.5em',
+
+                fontSize: "large",
+
+            },
+            ''
+        );
+
+
+        //Build Quote Content
+        let quoteContent = new HTMLasJS(
+            "div",
+            {
+                id: contentID
+            },
+            {
+                color: "inherit",
+                fontFamily: "baskerville, serif",
+                //margin: '0.5em 2em',
+                textAlign: 'center'
+            },
+            "'"+quote.content+"'"
+        );
+
+
+        //Build Author
+        let quoteAuthor = new HTMLasJS(
+            "div",
+            {
+                id: authorID
+            },
+            {
+                color: "inherit",
+
+                fontStyle: "italic",
+                fontFamily: "brush script mt, cursive",
+                fontSize: "2em",
+
+                alignSelf: "flex-end",
+                //padding: "5px",
+
+            },
+            "-"+quote.author
+        );
+
+        //Grab the Appropriate Containers and Build The HTMLasJS Objects into HTML
+        gridContainer.get().appendChild(quoteContainer.build())
+        quoteContainer.get().appendChild(quoteContent.build());
+        quoteContainer.get().appendChild(quoteAuthor.build());
+
+    }//End of For Of Loop iterating through the quotes
+
+}//End of Quote Builder
+
+/**
+ *
+ * @param error - Error Object to Log to Console and Page
+ * @param container - Container to Build Console
+ * @param msg - Message to Provide to the User
+ * @return {Promise<void>}
+ */
+async function displayError (error,container,msg= "Error: ") {
+    //Grab the Container and Build the Console using the Console Class
+    container.get().appendChild(Console.generateConsole().build());
+
+    //Log the Error to the Inspector Console
+    console.log(msg,error);
+
+    //Log the Error to the Page Console
+    Console.log(msg+error.toString());
+
 }
 
-goChuck().then( (data) => {
-
-    //Build HTMLasJS Object
-    let elementHTML = new HTMLasJS(
-        "p",
-        {
-            id: "NorrisQuote"
-        },
-        {
-            fontSize: "large",
-            fontWeight: "bold"
-        },
-        data.value
-    )
-
-    //Build HTML Object onto the Page
-    wrapperHTML.get().appendChild(elementHTML.build())
-}).catch( (error) => {
-    console.log(error);
-});
