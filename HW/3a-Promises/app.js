@@ -119,7 +119,7 @@ async function fetchQuotes(random = true, quantity = 48, api = "https://api.quot
 
         //On Erroneous Resolve:
         .catch((error) => {
-            displayError(error,container,"API Fetch Failed- ");
+            errorFunction(error,container,"API Fetch Failed- ");
         });
 
 }//End of Asynchronous Function to Fetch Quotes
