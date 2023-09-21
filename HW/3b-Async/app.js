@@ -3,8 +3,13 @@
  * Date: 11 Sep 2023
  * File: app.js
  * Project: N320-Base
- * Description: Promises
+ * Description: HW3b - Utilize Promises with Async Function to Retrieve Images from an API
  */
+
+
+//-----------------------------------
+//              Config
+//-----------------------------------
 
 //Import Classes to Build HTML via JS
 
@@ -20,156 +25,197 @@ HJShortcuts.injectCSS(pathToRoot);
 //Build a Wrapper onto the Page
 let wrapperHTML = HJShortcuts.buildWrapper();
 
-//
-// // Promises
-// // 3 States: Pending | Fulfilled | Rejected
-// // Must account for Pending and either Fulfilled or Rejected
-// // Normally accepts Data from an API
-//
-// //Callback Functions are argued into the promise
-// //Constants are typically used to hold Promises
-// const basicPromise = new Promise((resolveFunction,rejectFunction) => {
-//     let x = 10;
-//
-//     if (x===10) {
-//         resolveFunction();
-//     }
-//
-//     else {
-//         rejectFunction();
-//     }
-//
-// });
-//
-// //'Then' only runs if the promise is fulfilled
-// basicPromise.then(
-//     //Will Run on Resolved
-//     function () {
-//         wrapperHTML.get().innerHTML += "Basic Promise Resolved";
-//     },
-//     //Will Run on Rejected
-//     function() {
-//         wrapperHTML.get().innerHTML += "Basic Promise Rejected";
-//     }
-// );
-//
-//
-// //Another basic function using catch
-// const catchPromise = new Promise((resolveFunction, rejectFunction) => {
-//     //Generates value from 0 to 0.9999
-//     let randNum = Math.random();
-//
-//     if(randNum < 0.5) {
-//         resolveFunction(randNum);
-//     }
-//
-//     else {
-//         rejectFunction(randNum);
-//     }
-//
-// }); //End of Catch Promise
-//
-// //Notice how the function following the 'then' is the resolution function, and the function following the 'catch' is the rejection function
-// //You technically can do the promise as above where the rejection function is simply passed as a second argument to the 'then' function
-// catchPromise.then (
-//     //Resolve Function
-//     (num) => {
-//         console.log(`Catch Promise Resolved: ${num}`)
-//     }
-// //Then and uses Catch
-// ).catch(
-//     //Rejection Function
-//     (num) => {
-//         console.log(`Catch Promise Rejected: ${num}`)
-//     },
-// );
-//
-// //Promise with a setTimeout
-// //Notice there is no explicit conditional logic to guide whether it is resolved or rejected | it will always resolve
-// const timeoutPromise = new Promise( (resolveFunction,rejectFunction) => {
-//     console.log(`setTimeout Promise Initiated`);
-//     setTimeout( () => { resolveFunction(UtilHTML.random(0,10))}, 2000);
-// });
-//
-// //Resolution Function
-// timeoutPromise.then((data) => {
-//     console.log(`setTimeout Promise Resolved: ${data}`);
-// })
-//
-// //Note to the User that the Timeout Function has begun;
-//
-//
-// //Promise Chaining
-// const chainPromise = new Promise( (resolveFunction, rejectFunction) => {
-//     resolveFunction(UtilHTML.random(0,10));
-// });
-//
-// //Actual Promise Chain
-// chainPromise.then((data) => {
-//     console.log(`Promise Chain 1: ${data}`);
-//     return data*2;
-// }).then((data) => {
-//     console.log(`Promise Chain 2 (x2): ${data}`);
-//     return data+10;
-// }).then((data) => {
-//     console.log(`Promise Chain 3(+10): ${data}`);
-// });
-//
-//
-// //Fetching Data from an External Source
-// //Note, ideally a fetch will take as long as necessary to resolve, so it's good practice to add a timeout
-//
-// //This JSON just has some product information
-// const fetchPromise = fetch("https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json")
-//
-// //Check the state of the incoming external data
-// console.log("Fetched Promise: ",fetchPromise);
-//
-// //When it successfully resolves and responds
-// fetchPromise.then( (resolveResults) => {
-//     //Bind the Data and encode it into JSON into a Promise
-//     //Note, when getting json data from an API, it is inherently treated as a promise
-//     const jsonPromise = resolveResults.json();
-//
-//     //Indirect Promise Chaining
-//     jsonPromise.then ((jsonData) => {
-//         console.log("Fetch Response Data", jsonData);
-//     });
-// });
+//Build Title
+let pageTitle = new HTMLasJS(
+    "div",
+    {
+        id: "pageTitle"
+    },
+    {
+        margin: "0 auto",
+        fontSize: "3em",
+        fontFamily: "Brush Script MT, cursive"
+    },
+    'Breed Images from Dogs API'
+);
+
+//Build Title onto the Wrapper
+wrapperHTML.get().appendChild(pageTitle.build());
+
+//-------------------------------------
+//              Execution
+//-------------------------------------
+
+//Execute the Function
+fetchAndDisplayDogBreedImages(
+    true,
+    50,
+    "https://dog.ceo/api/breeds/image",
+    wrapperHTML, //Container to Build Elements On
+);
+
+//-------------------------------------
+//              Functions
+//-------------------------------------
+
+//Function to Grab Data from the Fetch and Then Render it Onto the Page
+async function fetchAndDisplayDogBreedImages(
+    random = true,
+    quantity = 48,
+    api = "https://dog.ceo/api/breeds/image",
+    container = wrapperHTML
+) {
+    //Exception Handle
+    try {
+        //Bind the Images from the Promise
+
+        //Fetch the Response from the API
+        const imagesPromise = await fetchDogBreedImages(random,quantity,api,container);
+        console.log("Fetch Promise: ",imagesPromise);
+
+        //Process the Response from the API
+        const imagesResponse = await imagesPromise.json();
+        console.log("Response: ",imagesResponse);
+
+        //Grab the Images from the Response
+        const images = imagesResponse.message;
+        console.log("Data: ",images);
 
 
+        //Use the Image Builder to Build the Dog Breed Images onto the Page
+        dogBreedImagesBuilder(images, container);
+    }
 
-async function goChuck() {
-    //API Call - Note remember that Fetch is a Promise
-    const response = await fetch("https://api.chucknorris.io/jokes/random");
-
-    //Bind the Results as a JSON once the response from the API is acquired
-    const results = await response.json()
-
-    //Check the Results
-    console.log(results);
-
-    //Return the Results
-    return results;
+    //Catch Any Exceptions
+    catch (error) {
+        displayError(error,container,"API Fetch Failed- ")
+    }
 }
 
-goChuck().then( (data) => {
+//Fetching Data from an External Source
+//Note, ideally a fetch will take as long as necessary to resolve, so it's good practice to add a timeout
+async function fetchDogBreedImages(random = true, quantity = 48, api = "https://dog.ceo/api/breeds/image", container = wrapperHTML)
+{
+    //Bind the API URL
+    let dogBreedImages = { api: api }
 
-    //Build HTMLasJS Object
-    let elementHTML = new HTMLasJS(
-        "p",
+    //Concatenate the Random Flag if Enabled
+    if(random === true) {
+        dogBreedImages.api += "/random"
+    }
+
+    //Concatenate the Quote Quantity
+    dogBreedImages.api += "/" + quantity;
+
+    //This Fetch Retrieves Breed Images from an API
+    return fetch(dogBreedImages.api);
+
+}//End of Asynchronous Function to Fetch Dog BreedImages
+
+
+/**
+ * Builds Dog Breed Images onto the Page
+ * @param Images - Array of Image Objects with the properties of '_id', 'author', and 'content'
+ * @param container - HTMLasJS Object to Build Objects Into
+ */
+function dogBreedImagesBuilder (Images,container) {
+
+    //Build Grid Container
+    let flexContainer = new HTMLasJS(
+        "div",
         {
-            id: "NorrisQuote"
+            id: "flexContainer"
         },
         {
-            fontSize: "large",
-            fontWeight: "bold"
+            display: "flex",
+            flexFlow: "row wrap",
+            width: "100%",
+            //flexGrow: 1,
+            margin: "1em auto",
+            justifyContent: "Space-evenly",
+            alignItems: "center"
         },
-        data.value
-    )
+        ''
+    );
+    container.get().appendChild(flexContainer.build());
 
-    //Build HTML Object onto the Page
-    wrapperHTML.get().appendChild(elementHTML.build())
-}).catch( (error) => {
-    console.log(error);
-});
+
+    //Iterate Through the BreedImages
+    Images.forEach((imageURL,index) => {
+
+        //Build Image Container that houses the Text and Author
+        let imageContainer = new HTMLasJS(
+            "div",
+            {
+                id: "ImgC-"+(index+1)
+            },
+            {
+                //display: "flex",
+                //flexFlow: "column wrap",
+                //flexGrow: 1,
+                //justifyContent: "space-between",
+
+                backgroundColor: 'white',
+                color: 'black',
+                //height: 'fit-content',
+
+                border: '4px solid black',
+                borderRadius: '1em',
+
+                height: "20vh",
+                //width: "25vw",
+                padding: '0.5em',
+                margin: '1em',
+
+                fontSize: "large",
+
+            },
+            ''
+        );
+
+
+        //Build Image Content
+        let image = new HTMLasJS(
+            "img",
+            {
+                id: "Img-"+(index+1),
+                src: imageURL,
+                height: "100%",
+            },
+            {
+                display: 'block',
+                borderRadius: '1em',
+                maxWidth: '100%',
+                margin: "auto"
+                //border: "solid 4px black"
+            },
+            ''
+        );
+
+        //Grab the Appropriate Containers and Build The HTMLasJS Objects into HTML
+        flexContainer.get().appendChild(imageContainer.build())
+        imageContainer.get().appendChild(image.build());
+
+    });//End of For Of Loop iterating through the Images
+
+}//End of Image Builder
+
+/**
+ * Displays Errors by Logging the Issue to the Console and the Page
+ * @param error - Error Object to Log to Console and Page
+ * @param container - Container to Build Console
+ * @param msg - Message to Provide to the User
+ * @return {Promise<void>}
+ */
+function displayError (error,container,msg= "Error: ") {
+    //Grab the Container and Build the Console using the Console Class
+    container.get().appendChild(Console.generateConsole().build());
+
+    //Log the Error to the Inspector Console
+    console.log(msg,error);
+
+    //Log the Error to the Page Console
+    Console.log(msg+error.toString());
+
+}
+

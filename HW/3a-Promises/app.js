@@ -3,11 +3,12 @@
  * Date: 11 Sep 2023
  * File: app.js
  * Project: N320-Base
- * Description: HW3a - Utilize Promises to Retrieve
+ * Description: HW3a - Utilize Promises to Retrieve Quotes from an API
  */
 
 //Questions
-//Was this completed as expected in terms of using an async function correctly to grab the data
+//Was this completed as expected in terms of using an async function correctly to grab the data?
+    //I.e. should I convert the JSON promise section to an async function?
 
 
 //-----------------------------------
@@ -49,7 +50,7 @@ wrapperHTML.get().appendChild(pageTitle.build());
 //              Execution
 //-------------------------------------
 
-//Run the Fetch Function
+//Run the Fetch Function on the API
 fetchQuotes(
     true,
     48,
@@ -108,7 +109,7 @@ async function fetchQuotes(random = true, quantity = 48, api = "https://api.quot
                 })
                 //Catch Errors
                 .catch( (error) => {
-                    displayError(error,container,"Data Parse Failed- ")
+                    displayError(error,container,"Data Parse Failed- ");
                 });
 
             //Log the Entire Quotes Objects
@@ -118,7 +119,7 @@ async function fetchQuotes(random = true, quantity = 48, api = "https://api.quot
 
         //On Erroneous Resolve:
         .catch((error) => {
-            displayError(error,container,"API Fetch Failed- ")
+            displayError(error,container,"API Fetch Failed- ");
         });
 
 }//End of Asynchronous Function to Fetch Quotes
@@ -129,7 +130,7 @@ async function fetchQuotes(random = true, quantity = 48, api = "https://api.quot
  * @param quotes - Array of Quote Objects with the properties of '_id', 'author', and 'content'
  * @param container - HTMLasJS Object to Build Objects Into
  */
-async function quoteBuilder (quotes,container) {
+function quoteBuilder (quotes,container) {
 
     //Build Grid Container
     let gridContainer = new HTMLasJS(
@@ -232,13 +233,13 @@ async function quoteBuilder (quotes,container) {
 }//End of Quote Builder
 
 /**
- *
+ * Displays Errors by Logging the Issue to the Console and the Page
  * @param error - Error Object to Log to Console and Page
  * @param container - Container to Build Console
  * @param msg - Message to Provide to the User
  * @return {Promise<void>}
  */
-async function displayError (error,container,msg= "Error: ") {
+function displayError (error,container,msg= "Error: ") {
     //Grab the Container and Build the Console using the Console Class
     container.get().appendChild(Console.generateConsole().build());
 
