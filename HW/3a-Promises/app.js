@@ -41,6 +41,8 @@ let pageTitle = new HTMLasJS(
     },
     'Quotes from Quotable API'
 );
+
+//Build Title onto the Wrapper
 wrapperHTML.get().appendChild(pageTitle.build());
 
 //-------------------------------------
