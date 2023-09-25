@@ -130,7 +130,7 @@ const requirements = [
     {tag: 'h2', id: 'author', content: "Jay Annadurai"},
     {tag: 'p', id: 'numList', content: `Numbers: ${numbers.toString()}`},
     {tag: 'p', id: 'numTotal', content: `Total: ${data.secondary.sum}`},
-    {tag: 'p', id: 'numTotal', content: `Average: ${data.secondary.average}`}
+    {tag: 'p', id: 'numAverage', content: `Average: ${data.secondary.average}`}
 ]
 
 //Build the Required HTML Elements onto the Page
