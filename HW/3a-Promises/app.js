@@ -214,11 +214,10 @@ function quoteBuilder (quotes,container) {
 
                 fontStyle: "italic",
                 fontFamily: "brush script mt, cursive",
-                fontSize: "2em",
+                fontSize: "1.5em",
 
                 alignSelf: "flex-end",
                 //padding: "5px",
-
             },
             "-"+quote.author
         );
