@@ -1,3 +1,11 @@
+/**
+ * Author: Jay Annadurai
+ * Date: 11 Sep 2023
+ * File: app.js
+ * Project: N320-Base
+ * Description: Array Methods Challenge
+ */
+
 //Import Classes to Build HTML via JS
 
 //Define Path to Root
@@ -12,110 +20,40 @@ HJShortcuts.injectCSS(pathToRoot);
 //Build a Wrapper onto the Page
 let wrapperHTML = HJShortcuts.buildWrapper();
 
+//Build a HTML Console onto the Page
+wrapperHTML.get().appendChild(Console.generateConsole().build());
 
 
+//***** Code Challenge *****//
 
-//Async Function to have three separate promises with respective delays
-async function allThree(){
+//Test String
+const testStringZ = "Mephyr is the God of the West Wind!"
 
-    //Define the Specs of Each Promise
-    let requirements = [
-        {label: "First", delay: 1000 },
-        {label: "Second", delay: 2000 },
-        {label: "Third", delay: 3000 }
-    ]
-
-    //Define an Array of Promises for the Promise.all
-    let promises = []
-
-    //For each required promise, build the appropriate promise!
-    for (const timeOut of requirements) {
-
-        //Create the Promise
-        const timeOutPromise = new Promise((resolve, reject) => {
-            //Create a timeout to delay before console.log
-            setTimeout( () => {
-                console.log(`${timeOut.label} Promise!`);
-                //On Resolve, Log the Message
-                resolve(`${timeOut.label} Promise Fulfilled!`);
-            },timeOut.delay);
+//hasAZ - True if string has at least one z
+function hasZ(string) {
+    //Split Converts String into Array of Characters
+    //Return True if Every Value is lower case
+    return string.split("").some(
+        (value, index, array) =>
+        {
+            //Lowercase it before checking
+            return "z" === value.toLowerCase();
         });
-
-        //Add the individual Promise to the array of Promises
-        promises.push(timeOutPromise);
-    }
-
-    //Bind all the promises together
-    const combinedPromise = Promise.all(promises);
-
-    //Return the Combined Promise to the calling function
-    return combinedPromise;
 }
+console.log("String has a Z? - ", testStringZ, " - Results:", hasZ(testStringZ));
 
-//Final Return Data Function
-async function returnData() {
-    //This will be a resolved promise all
-    let data = await allThree();
-    //Log the Data to the console
-    console.log(data);
+
+//Test Array
+const testArrayOO =  [1,3,9]
+
+
+//hasOnlyOdd - True if every number in the array is odd
+function hasOnlyOdd(array) {
+    return array.every(
+        (value,index, array) =>
+        {
+            return value%2 !== 0;
+        }
+    );
 }
-
-//Initiate the Stack
-returnData();
-
-//My Attempt
-//Promise with a setTimeout
-//Notice there is no explicit conditional logic to guide whether it is resolved or rejected | it will always resolve
-// const timeoutPromise = new Promise( (resolveFunction,rejectFunction) => {
-//     console.log(`setTimeout Promise Initiated`);
-//     setTimeout( () => { resolveFunction(UtilHTML.random(0,10))}, 2000);
-// });
-
-//
-// const sequentialPromises = () => {
-//     const oneSecPromise = new Promise( (resolveFunction,rejectFunction) => {
-//         let delay = 1000;
-//         console.log(`${delay/1000} Second Promise Initiated!`);
-//         setTimeout( () => { resolveFunction(`${delay/1000} Second Promise Fulfilled!`) }, delay);
-//     });
-//
-//     const twoSecPromise = new Promise( (resolveFunction,rejectFunction) => {
-//         let delay = 2000;
-//         console.log(`${delay/1000} Second Promise Initiated!`);
-//         setTimeout( () => { resolveFunction(`${delay/1000} Second Promise Fulfilled!`) }, delay);
-//     });
-//
-//     const threeSecPromise = new Promise( (resolveFunction,rejectFunction) => {
-//         let delay = 3000;
-//         console.log(`${delay/1000} Second Promise Initiated!`);
-//         setTimeout( () => { resolveFunction(`${delay/1000} Second Promise Fulfilled!`) }, delay);
-//     });
-//
-//     //Promise Chain
-//     threeSecPromise.then((data) => {
-//         twoSecPromise.then((data) => {
-//             oneSecPromise.then((data) => {
-//                 // console.log(`All Data Arrived!`);
-//                 return `All Data Arrived!`;
-//             })
-//         })
-//     })
-//
-// };
-//
-// sequentialPromises();
-//
-// async function results() {
-//     console.log(`Waiting for Results!`);
-//     const results = await sequentialPromises();
-//     console.log(results);
-// }
-//
-// results();
-//
-// // //Resolution Function
-// // timeoutPromise.then((data) => {
-// //     console.log(`setTimeout Promise Resolved: ${data}`);
-// // })
-
-
+console.log("Array of only odd numbers?", testArrayOO, "Results:", hasOnlyOdd(testArrayOO));
