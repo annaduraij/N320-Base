@@ -27,7 +27,7 @@ wrapperHTML.get().appendChild(Console.generateConsole().build());
 //***** Code Challenge *****//
 
 //Test String
-const testStringZ = "Mephyr is the God of the West Wind!"
+const testStringZ = "Zephyr is the God of the West Wind!"
 
 //hasAZ - True if string has at least one z
 function hasZ(string) {
@@ -57,21 +57,3 @@ function hasOnlyOdd(array) {
     );
 }
 console.log("Array of only odd numbers?", testArrayOO, "Results:", hasOnlyOdd(testArrayOO));
-
-//Test Array
-const testArrayReduce = [1,2,3,4,5];
-
-//Square a Number, check if that result is even, if so add it to the accumulator
-function selfMultiply (array, initValue = 0 ) {
-    return array.reduce( (accumulator, nextValue) => {
-        let compute = Math.pow(nextValue,2);
-        if (compute%2 === 0) {
-            return accumulator + compute;
-        } else {
-            return accumulator;
-        }
-
-    }, initValue)
-}
-
-console.log("Array:", testArrayReduce, "Results:", selfMultiply(testArrayReduce,50));
