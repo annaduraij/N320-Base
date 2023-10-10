@@ -38,8 +38,10 @@ class Person {
 }
 
 class Student extends Person {
-    constructor(name,age,major) {
-        super(name,age);
+    //Utilize Rest to Condense any Remainder of Arguments to an Array
+    constructor(major,...personArgs) {
+        //Expand the Array back to the original class
+        super(...personArgs);
         this.major = major;
     }
 
@@ -50,5 +52,5 @@ class Student extends Person {
 }
 
 let jay = new Person  ("Jay",22);
-let laura = new Student  ("Laura",19,"Linguistics");
+let laura = new Student  ("Linguistics","Laura",19,);
 jay.greeting(); laura.greeting();
