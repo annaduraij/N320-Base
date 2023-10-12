@@ -15,6 +15,10 @@
 /**
  * Media Objects contains information about a catalog item
  */
+
+//Import the Modules
+import {HTMLasJS,HJShortcuts, UtilHTML,Console} from "../../../Library/Modules/HTMLasJS.js";
+
 export class Media {
 
     //Static Property with Media IDs
@@ -108,7 +112,7 @@ export class Media {
         //If the Image Path is not already a URL or has no directories
         if(!(path.split('/').length > 1 || path.split('\\').length > 1)) {
             //Assume the Image is stored in the Path Directory if it's simply a file
-            this.img = '/Img/' + this.img;
+            this.img = 'Img/' + this.img;
         }
 
         //If the Image does not have a file extension, assume the Image is a jpg
@@ -127,11 +131,11 @@ export class Media {
     }
 
     /**
-     * @param title: string - Title of Media
-     * @param publicationYear: int - Publication Year
-     * @param valueUSD: float - Monetary Value of Item in USD
-     * @param image: string - Path to an Image to Display
-     * @param id: int - Default: '' - Media Object ID
+     * @param title string - Title of Media
+     * @param publicationYear int - Publication Year
+     * @param valueUSD float - Monetary Value of Item in USD
+     * @param image string - Path to an Image to Display
+     * @param id int - Default: '' - Media Object ID
      */
     constructor(title, publicationYear, valueUSD,image = '', id = '') {
 
@@ -145,6 +149,112 @@ export class Media {
 
         //Use the Setter Method to Set the ID
         this.id = id;
+    }
+
+    display(htmlContainer) {
+
+        let itemID = this._id;
+
+        let itemContainer = new HTMLasJS(
+            "div",
+            {
+                id: `item-${itemID}`
+            },
+            {
+                display: "flex",
+                flexFlow: "column wrap",
+                justifyContent: "space-between",
+                margin: '10px',
+                padding: '20px',
+
+                backgroundColor: 'white',
+                color: 'black',
+
+                border: '3px solid black',
+                borderRadius: '15px',
+
+                width: "25vw",
+
+                fontSize: "1em",
+
+                fontFamily: "baskerville, serif",
+                textAlign: 'center'
+
+            },
+            ''
+        );
+
+        htmlContainer.appendChild(itemContainer.build())
+
+
+        function processProperty(string) {
+            //Remove Underscore
+            if (string.charAt(0) === '_') { string = string.slice(1 )}
+            //Capitalize Property
+            return UtilHTML.ucFirst(string)+": ";
+        }
+
+        function appendCell(cell,cellID,htmlContainer) {
+            let cellHTMLasJS = new HTMLasJS(
+                "div",
+                {
+                    id: `${itemID}-${cellID}`
+                },
+                {
+                    color: 'black',
+                    border: "solid 1 px black",
+                    fontSize: "1em",
+                    fontFamily: "helvetica, sans-serif",
+                    textAlign: 'center'
+                },
+                cell
+            );
+
+            htmlContainer.appendChild(cellHTMLasJS.build())
+        } //End of appendCell
+
+        function addImage(path,htmlContainer,desc = "Item Image") {
+            let imageHTMLasJS = new HTMLasJS(
+                "img",
+                {
+                    id:`${itemID}-img`,
+                    src:path,
+                    alt:desc,
+                },
+                {
+                    width: '300px',
+                    height: '400px',
+                    margin: '0 auto',
+                    borderRadius: '15px'
+                }
+            )
+
+            htmlContainer.appendChild(imageHTMLasJS.build())
+        }
+
+
+        //Loop Through All the Core Properties
+        for(let property in this) {
+            //Bind the Value Associated with the Media Object
+            let value = this[property];
+
+            //If the Inner Value is an Object, Concatenate it
+            if( typeof value === 'object' && !Array.isArray(value)){
+
+                //If it's currency, add the dollar sign
+                if(property === '_value') { appendCell(`$${value.usd} USD`,property,itemContainer.get()) }
+
+                //Otherwise, get all the values inside the Object and Concatenate Them
+                else { appendCell(processProperty(property)+Object.values(value).join(", "),property,itemContainer.get()) }
+            }
+
+            //If it's an image, add the image rather than a cell
+            else if(property === 'img') { addImage(value,itemContainer.get())  }
+
+            //Otherwise, if it's just a regular value add it normally
+            else { appendCell(processProperty(property)+value,property,itemContainer.get()) }
+
+        }
     }
 
 }

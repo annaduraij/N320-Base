@@ -53,6 +53,10 @@ let c = new Catalogue(...items);
 
 c.getCount();
 
+c.display(wrapperHTML.get());
+
+c.removeItem(1).display(wrapperHTML.get());
+
 console.log(c);
 
 // //***** Array Methods *****//
