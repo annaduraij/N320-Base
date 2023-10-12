@@ -415,6 +415,14 @@ export class UtilHTML{
         return Math.floor(baseRandom * scaleRandom + interceptRandom);
 
     }//End of Random Function
+
+    //Static String Uppercase Method
+    //Gets first character of a string and uppercases it
+    static ucFirst(string) {
+        //Grab first character, upper case it and then append rest of the string
+        return string.charAt(0).toUpperCase() + string.slice(1)
+    }
+
 }
 
 //Class to Create HTML Console Outputs
