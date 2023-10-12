@@ -75,19 +75,11 @@ let items = [
     new CD("Juniper","Vale",11,"Everything is Color",2018,7.99,'JV-EverythingIsColor'),
 ]
 
-//Main Catalogue Showing All Items
-let primaryCatalogue = new Catalogue("Primary Catalogue",...items);
-primaryCatalogue.display(wrapperHTML.get())
-
-//Secondary Catalogue Showing Pre-Removed Item
-let secondaryCatalogue = new Catalogue("Catalogue with Pre-Removed Item",...items);
-secondaryCatalogue.randRemove().display(wrapperHTML.get());
-
 //Tertiary Catalogue with Randomly Removable Item
 let tertiaryCatalogue = new Catalogue("Catalogue with Removable Items",...items);
 
 //Build the Remove Item Button onto the Page and Add a Click Event Listener
-wrapperHTML.get().appendChild(removeButton.build());
+document.body.appendChild(removeButton.build());
 tertiaryCatalogue.display(wrapperHTML.get());
 removeButton.get().addEventListener("click", () => {
     tertiaryCatalogue.randRemoveDisplay();
