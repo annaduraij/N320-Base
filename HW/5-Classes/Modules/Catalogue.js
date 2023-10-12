@@ -104,7 +104,7 @@ export class Catalogue {
         return this._items.reduce( (accumulator,currentItem) => {
             //console.log(currentItem.value);
             return accumulator + currentItem.value;
-        },0);
+        },0).toFixed(2); //Note toFixed Forces the Decimal to 2 Places
     }
 
     set items(mediaItems) {
@@ -134,7 +134,10 @@ export class Catalogue {
         this.organize();
     }
 
-    constructor(...items) {
+    constructor(title,...items) {
+
+        //Define the Name of the Catalogue
+        this.title = title;
 
         //Create an Array to Bind the Items
         this.items = [];
@@ -147,110 +150,192 @@ export class Catalogue {
             this.addItem(...items);
         }
 
+        //Refresh All Properties
         this.refresh();
+
+        //Return the Object
+        return this;
     }
 
     //Build HTMLasJS Elements to Display
     display(htmlContainer) {
-        //Build Catalogue Wrapper that Contains Both the Title and the Content Container
-        let catalogueWrapper = new HTMLasJS(
-            "div",
-            {
-                id: `cWrapper-${this.id}`
-            },
-            {
-                display: "flex",
-                flexFlow: "column wrap",
-                justifyContent: "space-between",
+        //Bind the Parent HTML Element
+        this.parent = htmlContainer;
 
-                backgroundColor: 'black',
-                color: 'black',
+        //Define the HTML elements for the Catalogue Wrapper, Title, and the Content Container
+        this.html = {
+            wrapper: new HTMLasJS(
+                "div",
+                {
+                    id: `cWrapper-${this.id}`
+                },
+                {
+                    display: "flex",
+                    flexFlow: "column wrap",
+                    justifyContent: "space-between",
 
-                border: '0px solid black',
-                borderRadius: '15px',
+                    backgroundColor: 'black',
+                    color: 'black',
 
-                //width: "60vw",
+                    border: '0px solid black',
+                    borderRadius: '15px',
 
-                fontSize: "1.5em",
+                    margin: '20px',
 
-                fontFamily: "baskerville, serif",
-                textAlign: 'center'
+                    fontSize: "1.5em",
 
-            },
-            ''
-        );
+                    fontFamily: "baskerville, serif",
+                    textAlign: 'center'
 
-        let catalogueTitle = new HTMLasJS(
-            "div",
-            {
-                id: `cTitle-${this.id}`
-            },
-            {
-                display: "flex",
-                flexFlow: "column wrap",
-                flexGrow: 1,
-                justifyContent: "space-between",
+                },
+                ''
+            ),
 
-                backgroundColor: 'maroon',
-                color: 'white',
+            title: new HTMLasJS(
+                "div",
+                {
+                    id: `cTitle-${this.id}`
+                },
+                {
+                    display: "flex",
+                    flexFlow: "column wrap",
+                    flexGrow: 1,
+                    justifyContent: "space-between",
 
-                border: '1px solid black',
-                borderRadius: '15px 15px 0 0',
+                    backgroundColor: 'maroon',
+                    color: 'white',
 
-                //width: "60vw",
-                padding: '0.5em',
+                    border: '1px solid black',
+                    borderRadius: '15px 15px 0 0',
 
-                fontSize: "1.5em",
+                    //width: "60vw",
+                    padding: '0.5em',
 
-                fontFamily: "baskerville, serif",
-                textAlign: 'center'
+                    fontSize: "1.5em",
 
-            },
-            'Catalogue'
-        );
+                    fontFamily: "baskerville, serif",
+                    textAlign: 'center'
 
-        let catalogueContentContainer = new HTMLasJS(
-            "div",
-            {
-                id: `cContentContainer-${this.id}`
-            },
-            {
-                display: "flex",
-                flexFlow: "row wrap",
-                flexGrow: 0,
-                justifyContent: "space-between",
+                },
+                this.title
+            ),
 
-                backgroundColor: 'white',
-                color: 'black',
+            content: new HTMLasJS(
+                "div",
+                {
+                    id: `cContentContainer-${this.id}`
+                },
+                {
+                    display: "flex",
+                    flexFlow: "row wrap",
+                    flexGrow: 0,
+                    justifyContent: "space-around",
 
-                border: '1px solid black',
-                borderRadius: '0 0 15px 15px',
+                    backgroundColor: 'white',
+                    color: 'black',
 
-                //width: "60vw",
-                padding: '0.5em',
-                // margin: '0.5em',
+                    border: '1px solid black',
 
-                fontSize: "1.5em",
+                    //width: "60vw",
+                    padding: '0.5em',
+                    // margin: '0.5em',
 
-                fontFamily: "baskerville, serif",
-                textAlign: 'center'
+                    fontSize: "1.5em",
 
-            },
-            ''
-        );
+                    fontFamily: "baskerville, serif",
+                    textAlign: 'center'
 
+                },
+                ''
+            ),
 
+            valuation: new HTMLasJS(
+                "div",
+                {
+                    id: `cContentContainer-${this.id}`
+                },
+                {
+                    backgroundColor: '#c8c8c8',
+                    color: 'black',
 
+                    border: '1px solid black',
+                    borderRadius: '0 0 15px 15px',
+
+                    //width: "60vw",
+                    padding: '0.5em',
+                    // margin: '0.5em',
+
+                    fontSize: "1.5em",
+
+                    fontFamily: "sans-serif",
+                    textAlign: 'center'
+
+                },
+                `Aggregate Catalogue Value: $${this.getTotalValue()} USD`
+            )
+
+        } //End of HTML Object Literal
 
         //Build Main Catalogue Wrapper
-        htmlContainer.appendChild(catalogueWrapper.build());
-        catalogueWrapper.get().appendChild(catalogueTitle.build());
-        catalogueWrapper.get().appendChild(catalogueContentContainer.build());
+        htmlContainer.appendChild(this.html.wrapper.build());
 
+        //Build Other ELements onto the Wrapper
+        for (let element in this.html) {
+            if (element === 'wrapper') { continue; }
+            this.html.wrapper.get().appendChild(this.html[element].build())
+        }
+
+        //Build Media Items into the Content Container
         for (let mediaItem of this._items) {
-            console.log(mediaItem);
-            mediaItem.display(catalogueContentContainer.get());
+            //console.log(mediaItem);
+            mediaItem.display(this.html.content.get());
         }
 
     }
+
+    //Method to Clear the HTML contents of the Catalogue
+    clear() {
+        //Get the HTML wrapper of the Element and Remove it
+        if(this.hasOwnProperty('html')) {
+            //If the Wrapper Is Defined
+            if(this.html.hasOwnProperty('wrapper')) {
+                this.html.wrapper.get().remove();
+            }
+
+            //Reset the HTML Elements of the Display Code
+            this.html = {}
+        }
+
+
+
+        //Fluent Return
+        return this;
+    }
+
+    //Method to Remove a Random Item from the Catalogue
+    randRemove() {
+        //Select a Random Item in the Catalogue
+        let randItemIndex = UtilHTML.random(0,this.items.length-1)
+
+        //Remove the Item from the Catalogue
+        this.removeItem(this.items[randItemIndex]);
+
+        //Fluent
+        return this;
+    }
+
+    //Method to Remove a Random Item from the Catalogue and Display It
+    randRemoveDisplay() {
+
+        //If the Parent HTML Container Has Been Defined, Display to It
+        if(this.hasOwnProperty('parent')) {
+            //Remove an Item from the HTML, Clear the Catalogue from the HTML, Redisplay the Catalogue
+            this.randRemove().clear().display(this.parent);
+        }
+
+        //Fluent
+        return this;
+    }
+
+
 }

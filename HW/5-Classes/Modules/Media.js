@@ -24,6 +24,10 @@ export class Media {
     //Static Property with Media IDs
     static ids = [ ];
 
+    //Static Property with Display ID
+    //Incremental Property to Prevent Duplication of Elements on Item Updates
+    static displayID = 1;
+
     //Static Method to Update ID Count
     // static assignID(id='') {
     //
@@ -158,7 +162,7 @@ export class Media {
         let itemContainer = new HTMLasJS(
             "div",
             {
-                id: `item-${itemID}`
+                id: `item-${itemID}-${Media.displayID}`
             },
             {
                 display: "flex",
@@ -173,7 +177,7 @@ export class Media {
                 border: '3px solid black',
                 borderRadius: '15px',
 
-                width: "25vw",
+                width: "fit-content",
 
                 fontSize: "1em",
 
@@ -183,6 +187,8 @@ export class Media {
             },
             ''
         );
+
+        Media.displayID++;
 
         htmlContainer.appendChild(itemContainer.build())
 
@@ -290,7 +296,6 @@ export class DVD extends Media {
         this.runtime = contentRuntime
     }
 }
-
 
 /**
  * CD, subtype of Media
