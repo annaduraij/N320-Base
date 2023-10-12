@@ -208,8 +208,9 @@ export class Media {
                 },
                 {
                     color: 'black',
+                    margin: '2px',
                     border: "solid 1 px black",
-                    fontSize: "1em",
+                    fontSize: "0.8em",
                     fontFamily: "helvetica, sans-serif",
                     textAlign: 'center'
                 },
@@ -230,8 +231,12 @@ export class Media {
                 {
                     width: '300px',
                     height: '400px',
-                    margin: '0 auto',
-                    borderRadius: '15px'
+                    textAlign: 'center',
+                    margin: '20px auto',
+                    padding: '5px',
+                    borderRadius: '30px',
+                    border: 'solid 2px black',
+                    boxShadow: "5px 5px 20px black",
                 }
             )
 
@@ -254,8 +259,15 @@ export class Media {
                 else { appendCell(processProperty(property)+Object.values(value).join(", "),property,itemContainer.get()) }
             }
 
+            //If it's the title, process it in bold
+            else if(property === 'title')  {
+                appendCell(`<span style="font-weight: bold; color: black"> ${value} </span>`,property,itemContainer.get())
+            }
             //If it's an image, add the image rather than a cell
             else if(property === 'img') { addImage(value,itemContainer.get())  }
+
+            //Ignore the ID
+            else if(property === '_id') { /* Do nothing */ }
 
             //Otherwise, if it's just a regular value add it normally
             else { appendCell(processProperty(property)+value,property,itemContainer.get()) }
