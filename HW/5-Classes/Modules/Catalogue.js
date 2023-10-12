@@ -16,6 +16,8 @@
 
 //Catalogue Class Imports Media Item Class
 import {Media,Book,CD,DVD} from "./Media.js";
+//Import the Modules
+import {HTMLasJS,HJShortcuts, UtilHTML,Console} from "../../../Library/Modules/HTMLasJS.js";
 
 export class Catalogue {
 
@@ -133,7 +135,12 @@ export class Catalogue {
     }
 
     constructor(...items) {
+
+        //Create an Array to Bind the Items
         this.items = [];
+
+        //Generate a Random ID
+        this.id = Math.random().toString(20).substr(2, 6);
 
         //If any Items were provided, add them into the catalogue
         if (items !== null) {
@@ -141,5 +148,109 @@ export class Catalogue {
         }
 
         this.refresh();
+    }
+
+    //Build HTMLasJS Elements to Display
+    display(htmlContainer) {
+        //Build Catalogue Wrapper that Contains Both the Title and the Content Container
+        let catalogueWrapper = new HTMLasJS(
+            "div",
+            {
+                id: `cWrapper-${this.id}`
+            },
+            {
+                display: "flex",
+                flexFlow: "column wrap",
+                justifyContent: "space-between",
+
+                backgroundColor: 'black',
+                color: 'black',
+
+                border: '0px solid black',
+                borderRadius: '15px',
+
+                //width: "60vw",
+
+                fontSize: "1.5em",
+
+                fontFamily: "baskerville, serif",
+                textAlign: 'center'
+
+            },
+            ''
+        );
+
+        let catalogueTitle = new HTMLasJS(
+            "div",
+            {
+                id: `cTitle-${this.id}`
+            },
+            {
+                display: "flex",
+                flexFlow: "column wrap",
+                flexGrow: 1,
+                justifyContent: "space-between",
+
+                backgroundColor: 'maroon',
+                color: 'white',
+
+                border: '1px solid black',
+                borderRadius: '15px 15px 0 0',
+
+                //width: "60vw",
+                padding: '0.5em',
+
+                fontSize: "1.5em",
+
+                fontFamily: "baskerville, serif",
+                textAlign: 'center'
+
+            },
+            'Catalogue'
+        );
+
+        let catalogueContentContainer = new HTMLasJS(
+            "div",
+            {
+                id: `cContentContainer-${this.id}`
+            },
+            {
+                display: "flex",
+                flexFlow: "row wrap",
+                flexGrow: 0,
+                justifyContent: "space-between",
+
+                backgroundColor: 'white',
+                color: 'black',
+
+                border: '1px solid black',
+                borderRadius: '0 0 15px 15px',
+
+                //width: "60vw",
+                padding: '0.5em',
+                // margin: '0.5em',
+
+                fontSize: "1.5em",
+
+                fontFamily: "baskerville, serif",
+                textAlign: 'center'
+
+            },
+            ''
+        );
+
+
+
+
+        //Build Main Catalogue Wrapper
+        htmlContainer.appendChild(catalogueWrapper.build());
+        catalogueWrapper.get().appendChild(catalogueTitle.build());
+        catalogueWrapper.get().appendChild(catalogueContentContainer.build());
+
+        for (let mediaItem of this._items) {
+            console.log(mediaItem);
+            mediaItem.display(catalogueContentContainer.get());
+        }
+
     }
 }
