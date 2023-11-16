@@ -17,7 +17,7 @@
 //Catalogue Class Imports Media Item Class
 import {Media,Book,CD,DVD} from "./Media.js";
 //Import the Modules
-import {HTMLasJS,HJShortcuts, UtilHTML,Console} from "../../../Library/Modules/HTMLasJS.js";
+import {HTMLasJS,HJShortcuts, UtilJ,Console} from "../../../Library/Modules/HTMLasJS.js";
 
 export class Catalogue {
 
@@ -315,7 +315,7 @@ export class Catalogue {
     //Method to Remove a Random Item from the Catalogue
     randRemove() {
         //Select a Random Item in the Catalogue
-        let randItemIndex = UtilHTML.random(0,this.items.length-1)
+        let randItemIndex = UtilJ.random(0,this.items.length-1)
 
         //Remove the Item from the Catalogue
         this.removeItem(this.items[randItemIndex]);

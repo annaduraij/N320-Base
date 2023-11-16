@@ -21,7 +21,7 @@
 const pathToRoot = '../../'
 
 //Import the Modules
-import {HTMLasJS,HJShortcuts, UtilHTML,Console} from "../../Library/Modules/HTMLasJS.js";
+import {HTMLasJS,HJShortcuts, UtilJ,Console} from "../../Library/Modules/HTMLasJS.js";
 
 //Inject CSS into the Head
 HJShortcuts.injectCSS(pathToRoot);

@@ -4,7 +4,7 @@
 const pathToRoot = '../../'
 
 //Import the Modules
-import {HTMLasJS,HJShortcuts, UtilHTML,Console} from "../../Library/Modules/HTMLasJS.js";
+import {HTMLasJS,HJShortcuts, UtilJ,Console} from "../../Library/Modules/HTMLasJS.js";
 
 //Inject CSS into the Head
 HJShortcuts.injectCSS(pathToRoot);
@@ -68,7 +68,7 @@ returnData();
 //Notice there is no explicit conditional logic to guide whether it is resolved or rejected | it will always resolve
 // const timeoutPromise = new Promise( (resolveFunction,rejectFunction) => {
 //     console.log(`setTimeout Promise Initiated`);
-//     setTimeout( () => { resolveFunction(UtilHTML.random(0,10))}, 2000);
+//     setTimeout( () => { resolveFunction(UtilJ.random(0,10))}, 2000);
 // });
 
 //

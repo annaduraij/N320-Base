@@ -12,7 +12,7 @@
 const pathToRoot = '../../'
 
 //Import the Modules
-import {HTMLasJS,HJShortcuts, UtilHTML,Console} from "../../Library/Modules/HTMLasJS.js";
+import {HTMLasJS,HJShortcuts, UtilJ,Console} from "../../Library/Modules/HTMLasJS.js";
 
 //Inject CSS into the Head
 HJShortcuts.injectCSS(pathToRoot);
@@ -88,7 +88,7 @@ let wrapperHTML = HJShortcuts.buildWrapper();
 // //Notice there is no explicit conditional logic to guide whether it is resolved or rejected | it will always resolve
 // const timeoutPromise = new Promise( (resolveFunction,rejectFunction) => {
 //     console.log(`setTimeout Promise Initiated`);
-//     setTimeout( () => { resolveFunction(UtilHTML.random(0,10))}, 2000);
+//     setTimeout( () => { resolveFunction(UtilJ.random(0,10))}, 2000);
 // });
 //
 // //Resolution Function
@@ -101,7 +101,7 @@ let wrapperHTML = HJShortcuts.buildWrapper();
 //
 // //Promise Chaining
 // const chainPromise = new Promise( (resolveFunction, rejectFunction) => {
-//     resolveFunction(UtilHTML.random(0,10));
+//     resolveFunction(UtilJ.random(0,10));
 // });
 //
 // //Actual Promise Chain

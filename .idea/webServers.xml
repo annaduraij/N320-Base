@@ -17,7 +17,7 @@
         </fileTransfer>
       </webServer>
       <webServer id="eace6103-74ed-4d37-afc4-8e8839e329e3" name="XAMPP Mac" url="http://localhost">
-        <fileTransfer mountedRoot="/Applications/XAMPP/xamppfiles/htdocs" accessType="MOUNT" port="0" />
+        <fileTransfer mountedRoot="C:\Applications\XAMPP\xamppfiles\htdocs" accessType="MOUNT" port="0" />
       </webServer>
     </option>
   </component>

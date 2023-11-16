@@ -17,7 +17,7 @@
  */
 
 //Import the Modules
-import {HTMLasJS,HJShortcuts, UtilHTML,Console} from "../../../Library/Modules/HTMLasJS.js";
+import {HTMLasJS,HJShortcuts, UtilJ,Console} from "../../../Library/Modules/HTMLasJS.js";
 
 export class Media {
 
@@ -197,7 +197,7 @@ export class Media {
             //Remove Underscore
             if (string.charAt(0) === '_') { string = string.slice(1 )}
             //Capitalize Property
-            return UtilHTML.ucFirst(string)+": ";
+            return UtilJ.ucFirst(string)+": ";
         }
 
         function appendCell(cell,cellID,htmlContainer) {
